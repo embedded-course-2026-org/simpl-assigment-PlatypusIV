@@ -75,17 +75,25 @@ void setup() {
 }
 
 void loop() {
+    for(uint8_t i = 0;i <30;i++){
+        digitalWrite(LED_PIN, HIGH);
+        delay(200);
+        
+        digitalWrite(LED_PIN, LOW);
+        delay(200);
+    }
+
+    delay(2000);
+
     // Blink LED to show program is running
-    digitalWrite(LED_PIN, HIGH);
-    delay(1000);
-    
-    digitalWrite(LED_PIN, LOW);
-    delay(1000);
+
     
     // Print timestamp using proper uint32_t type
     static uint8_t count = 0;
     count++;
     
     uint32_t timestamp = millis();
-    Serial.printf("Count: %d, Uptime: %lu ms\n", count, timestamp);
+    if(count % 10 == 0){
+        Serial.printf("Count: %d, Uptime: %lu ms\n", count, timestamp);
+    }
 }
