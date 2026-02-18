@@ -15,6 +15,8 @@
 // LED pin for ESP32-C3 Super Mini
 #define LED_PIN 8
 
+uint32_t mainCount = 0;
+
 void setup() {
     // Initialize Serial communication
     Serial.begin(115200);
@@ -75,13 +77,12 @@ void setup() {
 }
 
 void loop() {
-    for(uint8_t i = 0;i <30;i++){
-        digitalWrite(LED_PIN, HIGH);
-        delay(200);
-        
-        digitalWrite(LED_PIN, LOW);
-        delay(200);
-    }
+
+    digitalWrite(LED_PIN, HIGH);
+    delay(2000);
+    
+    digitalWrite(LED_PIN, LOW);
+    delay(2000);
 
     delay(2000);
 
@@ -89,11 +90,13 @@ void loop() {
 
     
     // Print timestamp using proper uint32_t type
-    static uint8_t count = 0;
-    count++;
-    
-    uint32_t timestamp = millis();
-    if(count % 10 == 0){
-        Serial.printf("Count: %d, Uptime: %lu ms\n", count, timestamp);
+    if(mainCount>4000000){
+        mainCount=0;
     }
+    if(mainCount % 20 == 0){
+        uint32_t timestamp = millis();
+        Serial.printf("Count: %d, Uptime: %lu ms\n", count, timestamp);
+        
+    }
+    mainCount++;
 }
